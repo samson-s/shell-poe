@@ -1,6 +1,5 @@
 from utils import run_command
 from .handler import Handler
-from roles import SHELL_ROLE
 
 
 class ShellHandler(Handler):
