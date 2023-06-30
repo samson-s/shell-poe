@@ -3,6 +3,9 @@ Welcome to Shell POE
 This app provides a shell and CLI assistance using PoeClient API.
 
 Usage:
+
+API key can be found from poe website's cookies.
+
 `poe_shell --help`
 for help on options
 
