@@ -1,6 +1,8 @@
 import typer
 import sys
+import os
 
+from .config import STORAGE_PATH
 from .poe_client import PoeClient
 
 app = typer.Typer()
@@ -32,12 +34,15 @@ def main(
         rich_help_panel="Assistance Options",
     ),
 ):
+    if not os.path.exists(STORAGE_PATH):
+        os.makedirs(STORAGE_PATH)
+
     client = PoeClient().client
 
     stdin_passed = not sys.stdin.isatty()
 
     if shell:
-        from handlers.shell_handler import ShellHandler
+        from .handlers.shell_handler import ShellHandler
 
         handler = ShellHandler(client)
         handler.handle()
@@ -47,13 +52,13 @@ def main(
         print(list)
 
     elif chat:
-        from handlers.chat_handler import ChatHandler
+        from .handlers.chat_handler import ChatHandler
 
         handler = ChatHandler(client)
         handler.handle(message)
 
     elif message:
-        from handlers.one_off_handler import OneOffHandler
+        from .handlers.one_off_handler import OneOffHandler
 
         if stdin_passed:
             message = f"{sys.stdin.read()}\n\n{message or ''}"

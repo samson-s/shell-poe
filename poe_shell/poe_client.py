@@ -1,8 +1,11 @@
 import poe
 import pickle
 
+from .config import STORAGE_PATH
+
+
 class PoeClient:
-    API_KEY_PICKLE_FILE = "api_key.pickle"
+    API_KEY_PICKLE_FILE = STORAGE_PATH + "api_key.pickle"
 
     def __init__(self):
         api_key = self.get_api_key()
@@ -29,4 +32,3 @@ class PoeClient:
         print("API key saved.")
 
         return api_key
-
