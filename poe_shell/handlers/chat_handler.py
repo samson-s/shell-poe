@@ -1,9 +1,10 @@
 from .handler import Handler
 
+
 class ChatHandler(Handler):
     chat_bot = "chinchilla"
 
-    def handle(self, message: str|None):
+    def handle(self, message: str | None):
         if message:
             self.send_message(message.strip())
 
@@ -12,7 +13,7 @@ class ChatHandler(Handler):
         while True:
             message = input(">>> ").strip()
 
-            if message in ['d', 'exit']:
+            if message in ["d", "exit"]:
                 break
             elif message:
                 self.send_message(message)
@@ -21,7 +22,6 @@ class ChatHandler(Handler):
 
         if message:
             self.client.send_chat_break(self.chat_bot)
-
 
     def send_message(self, message: str):
         response = ""
@@ -33,3 +33,6 @@ class ChatHandler(Handler):
         print("\n")
 
         return response
+
+    def print_handler_description(self):
+        print("---Chat Mode---")
