@@ -1,7 +1,7 @@
 import typer
 import sys
 
-from poe_client import PoeClient
+from .poe_client import PoeClient
 
 app = typer.Typer()
 
@@ -62,6 +62,10 @@ def main(
 
     else:
         typer.echo("Use --help for more information.")
+
+
+def cli():
+    app()
 
 
 if __name__ == "__main__":

@@ -11,6 +11,8 @@ python = "^3.11"
 typer = {extras = ["all"], version = "^0.9.0"}
 poe-api = "^0.4.6"
 
+[tool.poetry.scripts]
+poe_shell = "poe_shell:cli"
 
 [build-system]
 requires = ["poetry-core"]
