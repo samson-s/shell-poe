@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "poe-shell"
-version = "0.1.6"
+version = "0.1.7"
 description = ""
 authors = ["Samson Hui <hui.kawang@yahoo.com.hk>"]
 readme = "README.md"
