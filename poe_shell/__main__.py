@@ -33,11 +33,21 @@ def main(
         help="Return the list of bots.",
         rich_help_panel="Assistance Options",
     ),
+    remove_api_key: bool = typer.Option(
+        False,
+        "--remove-api-key",
+        help="Remove the saved API key.",
+        rich_help_panel="Assistance Options",
+    ),
 ):
     if not os.path.exists(STORAGE_PATH):
         os.makedirs(STORAGE_PATH)
 
-    client = PoeClient().client
+    if remove_api_key:
+        PoeClient().remove_api_key()
+        return
+
+    client = PoeClient().connect()
 
     stdin_passed = not sys.stdin.isatty()
 
