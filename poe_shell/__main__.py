@@ -55,7 +55,7 @@ def main(
         from .handlers.shell_handler import ShellHandler
 
         handler = ShellHandler(client)
-        handler.handle()
+        handler.handle(message)
 
     elif bots:
         list = client.bot_names

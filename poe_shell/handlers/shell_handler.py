@@ -5,23 +5,28 @@ from .handler import Handler
 class ShellHandler(Handler):
     chat_bot = "poeshellbot"
 
-    def handle(self):
-        command = ""
+    def handle(self, message: str | None = None):
+        print("Enter command description.")
+        print("Enter 'd' to exit.")
+        print("Enter 'e' to execute the command.")
+        print("Enter 'c' to enter custom command mode.")
 
-        print(
-            "Enter command description \nor 'd' to exit \nor 'c' to custom command mode."
-        )
+        if message:
+            command = self.send_message(message.strip())
+        else:
+            command = ""
+
         while True:
-            prompt = input(">>> ").strip()
+            message = input(">>> ").strip()
 
-            if prompt in ["d", "exit"]:
+            if message in ["d", "exit"]:
                 break
-            elif prompt in ["e"]:
+            elif message in ["e"]:
                 run_command(command)
-            elif prompt in ["c"]:
+            elif message in ["c"]:
                 self.custom_command_mode()
-            elif prompt:
-                command = self.send_message(prompt)
+            elif message:
+                command = self.send_message(message)
                 print("Enter command description or 'e' to enter.")
             else:
                 continue
