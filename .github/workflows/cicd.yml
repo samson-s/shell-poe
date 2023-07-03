@@ -10,7 +10,7 @@ jobs:
       contents: write
 
     steps:
-      - name: Publish package distributions to TestPyPI
+      - name: Publish package distributions to PyPI
         uses: le0nchw/pypi-poetry-publish@main
         with:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
