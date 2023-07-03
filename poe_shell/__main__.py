@@ -1,6 +1,8 @@
 import typer
 import sys
 import os
+from rich.table import Table
+from rich.console import Console
 
 from .config import STORAGE_PATH
 from .poe_client import PoeClient
@@ -37,9 +39,17 @@ def main(
         False,
         "--remove-api-key",
         help="Remove the saved API key.",
+    ),
+    bot: str = typer.Option(
+        None,
+        "--bot",
+        "-b",
+        help="Specify the bot to chat with.",
         rich_help_panel="Assistance Options",
     ),
 ):
+    console = Console()
+
     if not os.path.exists(STORAGE_PATH):
         os.makedirs(STORAGE_PATH)
 
@@ -49,34 +59,31 @@ def main(
 
     client = PoeClient().connect()
 
-    stdin_passed = not sys.stdin.isatty()
+    if bots:
+        bot_names = client.bot_names
+        table = Table("Tag", "Bot Name")
+        for tag in bot_names:
+            table.add_row(tag, bot_names[tag])
+        console.print(table)
+        return
 
     if shell:
-        from .handlers.shell_handler import ShellHandler
-
-        handler = ShellHandler(client)
-        handler.handle(message)
-
-    elif bots:
-        list = client.bot_names
-        print(list)
-
+        from .handlers.shell_handler import ShellHandler as Handler
     elif chat:
-        from .handlers.chat_handler import ChatHandler
-
-        handler = ChatHandler(client)
-        handler.handle(message)
-
+        from .handlers.chat_handler import ChatHandler as Handler
     elif message:
-        from .handlers.one_off_handler import OneOffHandler
-
-        if stdin_passed:
-            message = f"{sys.stdin.read()}\n\n{message or ''}"
-
-        OneOffHandler(client).handle(message)
-
+        from .handlers.one_off_handler import OneOffHandler as Handler
     else:
         typer.echo("Use --help for more information.")
+        return
+
+    hander = Handler(client, bot)
+
+    stdin_passed = not sys.stdin.isatty()
+    if stdin_passed:
+        message = f"{sys.stdin.read()}\n\n{message or ''}"
+
+    hander.handle(message)
 
 
 def cli():
