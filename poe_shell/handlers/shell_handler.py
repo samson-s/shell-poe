@@ -1,9 +1,9 @@
-from utils import run_command
+from ..utils import run_command
 from .handler import Handler
 
 
 class ShellHandler(Handler):
-    chat_bot = "shellbotsss"
+    chat_bot = "poeshellbot"
 
     def handle(self):
         command = ""
